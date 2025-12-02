@@ -3,7 +3,7 @@ import { getDaLiuRenPaiPan } from './src/utils/daliuren.js';
 console.log('Testing Shen Sha Distribution...');
 
 const date = new Date('2025-11-29T15:56:00');
-const result = getDaLiuRenPaiPan(date, 1987, '男');
+const result = getDaLiuRenPaiPan(date, 1999, '男');
 
 if (result.shenShaDistribution) {
   console.log('Shen Sha Distribution found!');

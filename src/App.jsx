@@ -259,7 +259,8 @@ function App() {
         panData.大运.大运.forEach(dy => {
           text += `${dy.干支} (${dy.开始年份}-${dy.结束年份}, ${dy.开始年龄}-${dy.结束年龄}岁) `;
           text += `天干[${dy.天干十神}] `;
-          text += `地支[${dy.地支十神.join(',')}]\n`;
+          const hidden = dy.地支藏干.map((gan, i) => `${gan}(${dy.地支十神[i]})`).join(' ');
+          text += `地支藏干[${hidden}]\n`;
         });
       }
       
