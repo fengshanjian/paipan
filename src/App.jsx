@@ -286,7 +286,7 @@ function App() {
     <ErrorBoundary>
       <div className="min-h-screen bg-gray-100 p-[30px] flex flex-col items-center font-sans text-gray-800">
         <h1 className="text-3xl font-bold mb-6 text-indigo-900">
-          {appMode === 'qimen' ? '奇门遁甲排盘' : appMode === 'daliuren' ? '大六壬排盘' : appMode === 'liuyao' ? '六爻排盘' : '八字排盘'} (Electron)
+          {appMode === 'qimen' ? '奇门遁甲排盘' : appMode === 'daliuren' ? '大六壬排盘' : appMode === 'liuyao' ? '六爻排盘' : '八字排盘'} {window.electron ? '(Electron)' : '(Web)'}
         </h1>
         
         <div className="bg-white p-6 rounded-xl shadow-md mb-8 w-full max-w-2xl flex flex-col gap-6">
