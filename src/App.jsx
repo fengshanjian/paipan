@@ -10,6 +10,9 @@ import BaZiDisk from './components/BaZiDisk';
 import dayjs from 'dayjs';
 import './index.css';
 
+const ZHI = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
+const getZhiIdx = (z) => ZHI.indexOf(z);
+
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
@@ -88,7 +91,8 @@ function App() {
         { id: 8, name: '艮宫' }, { id: 1, name: '坎宫' }, { id: 6, name: '乾宫' }
       ];
       
-      let text = '========== 奇门遁甲排盘 ==========\n\n';
+      let text = '你是一个精通奇门遁甲的高手，请基于下面的排盘信息，分析一下【*********你的问题*********】，排盘信息如下：\n\n';
+      text += '========== 奇门遁甲排盘 ==========\n\n';
       text += `【局象信息】\n`;
       text += `节气：${panData.jieQi}\n`;
       text += `年柱：${panData.yearGanZhi}\n`;
@@ -126,7 +130,8 @@ function App() {
       return text;
     } else if (appMode === 'daliuren') {
       // Da Liu Ren Text Format
-      let text = '========== 大六壬排盘 ==========\n\n';
+      let text = '你是一个精通大六壬的高手，请基于下面的排盘信息，分析一下【*********你的问题*********】，排盘信息如下：\n\n';
+      text += '========== 大六壬排盘 ==========\n\n';
       text += `求测年命: ${panData.birthYearGanZhi || birthYear} (${gender})  行年: ${panData.xingNian}\n`;
       text += `日期: ${panData.dateStr}\n`;
       text += `四柱: ${panData.ganZhi.year} ${panData.ganZhi.month} ${panData.ganZhi.day} ${panData.ganZhi.hour}\n`;
@@ -142,8 +147,10 @@ function App() {
       text += `${panData.siKe.fourth.zhi} ${panData.siKe.third.zhi} ${panData.siKe.second.zhi} ${panData.siKe.first.zhi}\n\n`;
       
       text += `【天地盘】\n`;
-      // Simplified representation
-      text += `天盘: ${panData.tianPan.join(',')}\n\n`;
+      // Output tian pan, di pan, and tian jiang in a table format
+      text += `地支:   ${ZHI.join('  ')}\n`;
+      text += `天盘:   ${panData.tianPan.map(z => z.padEnd(2, ' ')).join('  ')}\n`;
+      text += `贵神:   ${ZHI.map(z => (panData.tianJiang[panData.tianPan[getZhiIdx(z)]] || '').slice(0, 2).padEnd(2, ' ')).join('  ')}\n\n`;
       
       // Add Shen Sha Text
       if (panData.shenShaText) {
@@ -161,7 +168,8 @@ function App() {
       return text;
     } else if (appMode === 'liuyao') {
       // Liu Yao Text Format
-      let text = '========== 六爻排盘 ==========\n\n';
+      let text = '你是一个精通六爻的高手，请基于下面的排盘信息，分析一下【*********你的问题*********】，排盘信息如下：\n\n';
+      text += '========== 六爻排盘 ==========\n\n';
       text += `求测年命: ${panData.benMing} (${gender})  行年: ${panData.xingNian}\n`;
       text += `日期: ${panData.dateStr}\n`;
       text += `干支: ${panData.ganZhi.year} ${panData.ganZhi.month} ${panData.ganZhi.day} ${panData.ganZhi.hour}\n`;
@@ -210,7 +218,8 @@ function App() {
       text += '\n=================================';
       return text;
     } else if (appMode === 'bazi') {
-      let text = '========== 八字排盘 ==========\n\n';
+      let text = '你是一个精通四柱八字的高手，现在是2025年年底，请分别用梁湘润、盲派、子平命理等八字理论对下面的八字命盘进行推算，分析一下命主的整体命运情况，考虑身强身弱，分析大运流年和十神关系，体用平衡，分析一下命格的成就如何，分析一下人生的关键节点，分析一下【2026】以及【2027】两年的流年，注意逻辑合理，综合各种信息文本判断准确的关系模型，交叉验证，多次迭代后输出最终正确结果，八字命盘信息如下：\n\n';
+      text += '========== 八字排盘 ==========\n\n';
       text += `性别: ${panData.性别}\n`;
       text += `阳历: ${panData.阳历}\n`;
       text += `农历: ${panData.农历}\n`;
@@ -500,11 +509,11 @@ function App() {
           </div>
         </div>
 
-        <div className="flex gap-8 items-start w-full max-w-5xl">
+        <div className="flex flex-col gap-8 items-center w-full max-w-5xl">
           {appMode === 'qimen' ? (
             <>
               {/* Qimen Info Panel */}
-              <div className="w-64 bg-white p-6 rounded-xl shadow-md space-y-4">
+              <div className="w-full bg-white p-6 rounded-xl shadow-md space-y-4">
                 <h2 className="text-xl font-semibold border-b pb-2">局象信息</h2>
                 {panData && !panData.error ? (
                   <div className="space-y-2 text-sm">
